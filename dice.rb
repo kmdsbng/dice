@@ -11,23 +11,48 @@ class Dice
   end
 
   def north
+    tap do
+      nt = @t
+      @t = 7 - @n
+      @n = nt
+    end
   end
 
   def west
+    tap do
+      wt = @t
+      @t = 7 - @w
+      @w = wt
+    end
   end
 
   def south
+    tap do
+     self.north()
+      @t = 7 - @t
+      @n = 7 - @n
+    end
   end
 
   def east
+    tap do 
+      self.west()
+      @t = 7 - @t
+      @w = 7 - @w
+    end
   end
+
+  alias_method :N, :north
+  alias_method :W, :west
+  alias_method :S, :south
+  alias_method :E, :east
 
 end
 
 
 def main(methods)
   dice = Dice.new
-  vectors = []
+  vectors = [dice.t]
 
   methods.each do |m|
     dice = dice.send(m)
@@ -39,7 +64,7 @@ end
 
 case $0
 when __FILE__
-  vectors = main(['E', 'E', 'E', 'E'])
+  vectors = main(['N', 'E', 'E', 'E'])
   print vectors
 when /spec[^\/]*$/
   # {spec of the implementation}
