@@ -21,31 +21,25 @@ class Dice
   def west
     tap do
       wt = @t
-      @t = reverse(@w)
+      @t = 7 - @w
       @w = wt
     end
   end
 
   def south
     tap do
-      st = @t
-      @t = @n
-      @n = reverse(st)
+     self.north()
+      @t = 7 - @t
+      @n = 7 - @n
     end
   end
 
   def east
     tap do 
-      et = @t
-      @t = @w  
-      @w = reverse(et)
+      self.west()
+      @t = 7 - @t
+      @w = 7 - @w
     end
-  end
-
-
-  private
-  def reverse(d)
-    7 - d
   end
 
   alias_method :N, :north
