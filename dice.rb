@@ -65,7 +65,7 @@ def main(methods)
     vectors.push dice.t
   end
   
-  vectors
+  vectors.join()
 end
 
 case $0
