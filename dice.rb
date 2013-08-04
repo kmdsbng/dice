@@ -11,23 +11,54 @@ class Dice
   end
 
   def north
+    tap do
+      nt = @t
+      @t = reverse(@n)
+      @n = nt
+    end
   end
 
   def west
+    tap do
+      wt = @t
+      @t = reverse(@w)
+      @w = wt
+    end
   end
 
   def south
+    tap do
+      st = @t
+      @t = @n
+      @n = reverse(st)
+    end
   end
 
   def east
+    tap do 
+      et = @t
+      @t = @w  
+      @w = reverse(et)
+    end
   end
+
+
+  private
+  def reverse(d)
+    7 - d
+  end
+
+  alias_method :N, :north
+  alias_method :W, :west
+  alias_method :S, :south
+  alias_method :E, :east
 
 end
 
 
 def main(methods)
   dice = Dice.new
-  vectors = []
+  vectors = [dice.t]
 
   methods.each do |m|
     dice = dice.send(m)
@@ -39,7 +70,7 @@ end
 
 case $0
 when __FILE__
-  vectors = main(['E', 'E', 'E', 'E'])
+  vectors = main(['N', 'E', 'E', 'E'])
   print vectors
 when /spec[^\/]*$/
   # {spec of the implementation}
